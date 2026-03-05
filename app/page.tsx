@@ -142,8 +142,8 @@ export default function Home() {
             Available for consulting, freelance projects, and building your next app.
           </p>
           <div className="cta">
-            <a href="mailto:rui@itzami.com" className="btn">Hire Me</a>
-            <a href="https://twitter.com/rui_ro_sousa" target="_blank" rel="noopener noreferrer" className="btn-secondary btn">Twitter</a>
+            <a href="mailto:rros00@gmail.com" className="btn">Hire Me</a>
+            <a href="https://twitter.com/HeyItzaMi" target="_blank" rel="noopener noreferrer" className="btn-secondary btn">Twitter</a>
             <a href="https://github.com/ItzaMi" target="_blank" rel="noopener noreferrer" className="btn-secondary btn">GitHub</a>
           </div>
         </header>
@@ -201,8 +201,8 @@ export default function Home() {
           <h2>Let&apos;s Work Together</h2>
           <p>Available for consulting, freelance projects, and building your next mobile app.</p>
           <div className="social-links">
-            <a href="mailto:rui@itzami.com" className="btn">Email Me</a>
-            <a href="https://twitter.com/rui_ro_sousa" target="_blank" rel="noopener noreferrer" className="btn-secondary btn">Twitter</a>
+            <a href="mailto:rros00@gmail.com" className="btn">Email Me</a>
+            <a href="https://twitter.com/HeyItzaMi" target="_blank" rel="noopener noreferrer" className="btn-secondary btn">Twitter</a>
             <a href="https://github.com/ItzaMi" target="_blank" rel="noopener noreferrer" className="btn-secondary btn">GitHub</a>
           </div>
         </section>
