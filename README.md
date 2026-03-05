@@ -1,134 +1,106 @@
-# Rui Sousa - Portfolio
+# Rui Sousa - Portfolio (Next.js)
 
-Dynamic portfolio site with real app data from App Store Connect + iTunes API.
+Dynamic portfolio with real app data from App Store Connect + iTunes API.
+
+Built with Next.js for easy conditional rendering and deployment.
 
 ## What's Inside
 
-- **index.html** - Retro-styled portfolio with glassmorphism, gradients, hover effects
-- **apps-data.json** - 17 apps (11 live, 6 coming soon) with real icons, URLs, descriptions
-- **fetch-app-data.js** - Script to refresh app data from ASC + iTunes API
+- **Next.js 15** with TypeScript
+- **React components** with proper conditional rendering
+- **Static export** (no server required)
+- **Real app data** from iTunes API (11 live, 6 coming soon)
+- **Clean design** (original minimal white cards)
 
-## Current Stats
+## Key Features
 
-- **11 apps live** on App Store with real icons & links
-- **6 apps coming soon** (Waddle, Fossy, Roam, Carely, SnapDone, itza-habit)
-- **Real data:** App Store URLs, 512x512 icons, descriptions, pricing, genres
+- ✅ Live apps show icons + descriptions + App Store links
+- ✅ Coming soon apps hide icons, show badge, no link
+- ✅ Proper TypeScript types for app data
+- ✅ Static export for Vercel/Netlify
+- ✅ Automatic stats (counts apps, calculates live vs coming soon)
 
-## Apps Included
+## Development
 
-### Live Apps (with icons & App Store links)
-1. Buggy: Baby Tracker & Log ($3.99)
-2. Pipeta - Organize Colors (Free)
-3. Coiny: Coin Identifier (Free)
-4. Fishy: Fish Identifier (Free)
-5. Oldy: Antique Identifier (Free)
-6. Arthry: Bug Identifier (Free)
-7. Planty: Plant Identifier (Free)
-8. Birdy: Bird Identifier (Free)
-9. Rocky: Stone & Gem Identifier (Free)
-10. Mushy: Mushroom Identifier (Free)
-11. Trainy: Train Identifier (Free)
-
-### Coming Soon (with badges)
-- Waddle, Fossy, Roam, Carely, SnapDone, itza-habit
-
-## Deployment
-
-### Option 1: Vercel (Recommended)
 ```bash
-cd /opt/openclaw/clawd/itzami-portfolio
+npm install
+npm run dev
+# Open http://localhost:3000
+```
+
+## Build & Deploy
+
+```bash
+npm run build
+# Generates static export in /out folder
+```
+
+### Deploy to Vercel
+
+```bash
 vercel deploy --prod
 ```
 
-### Option 2: Netlify
-```bash
-cd /opt/openclaw/clawd/itzami-portfolio
-netlify deploy --prod --dir .
-```
-
-### Option 3: Any static host
-Upload these files:
-- index.html
-- apps-data.json
-- vercel.json (optional, for redirects)
+Or just push to GitHub - Vercel will auto-deploy from main branch.
 
 ## Updating App Data
 
-When apps go live or stats change:
+When apps go live or change:
 
 ```bash
-cd /opt/openclaw/clawd/itzami-portfolio
-node fetch-app-data.js
+node fetch-app-data.js  # Refresh apps-data.json
+git add apps-data.json && git commit -m "Update app data" && git push
 ```
 
-This will:
-1. Fetch all apps from App Store Connect
-2. Query iTunes API for icons, descriptions, URLs
-3. Generate updated apps-data.json
-4. No need to touch HTML - it loads data dynamically
+Vercel will rebuild automatically.
 
-## Local Testing
+## Project Structure
 
-**Can't just open index.html** - JavaScript fetch() requires a web server.
-
-Quick test server:
-```bash
-cd /opt/openclaw/clawd/itzami-portfolio
-python3 -m http.server 8080
-# Open http://localhost:8080
+```
+itzami-portfolio/
+├── app/
+│   ├── layout.tsx       # Root layout with metadata
+│   ├── page.tsx         # Main page component
+│   └── globals.css      # All styles
+├── apps-data.json       # App metadata (auto-generated)
+├── fetch-app-data.js    # Data fetcher script
+├── package.json         # Dependencies
+├── tsconfig.json        # TypeScript config
+└── next.config.js       # Next.js config (static export)
 ```
 
-Or use VSCode Live Server extension.
+## Why Next.js?
 
-## Design Features
+**Before (plain HTML/JS):**
+```javascript
+${!isLive ? '<span class="app-badge">Coming Soon</span>' : ''}
+${isLive && app.icon ? `<img src="${app.icon}">` : ''}
+```
+Messy string templates, hard to maintain.
 
-### Visual Style
-- Dark theme (black background)
-- Retro gradients (purple/pink/blue)
-- Glassmorphism cards
-- Animated gradient background
-- Glow effects on hover
-- Smooth transitions
+**After (React/Next.js):**
+```tsx
+{!isLive && <span className="app-badge">Coming Soon</span>}
+{isLive && app.icon && <img src={app.icon} alt={app.name} />}
+```
+Clean, readable, TypeScript-safe.
 
-### Card Layout
-- 380px minimum width (no squishing)
-- 96×96 app icons (high-res, rounded)
-- Hover: lift + scale + glow
-- "Coming Soon" badge for unreleased apps
-- Genre & price badges
-- Direct App Store links
+## Deployment
 
-### Responsive
-- Desktop: 3-column grid
-- Tablet: 2-column
-- Mobile: 1-column, stacked
-- All text scales properly
+**Vercel (Recommended):**
+- Push to GitHub
+- Vercel auto-detects Next.js
+- Auto-builds on every push
 
-## Files
+**Netlify:**
+- Build command: `npm run build`
+- Publish directory: `out`
 
-- `index.html` - Production portfolio (retro style)
-- `index-retro.html` - Backup of retro version
-- `index-dynamic.html` - Earlier version (pre-retro)
-- `apps-data.json` - App metadata (auto-generated)
-- `fetch-app-data.js` - Data fetcher script
-- `vercel.json` - Deployment config
-- `README.md` - This file
-
-## Tech Stack
-
-- Zero frameworks (vanilla HTML/CSS/JS)
-- iTunes Search API (public, no auth)
-- App Store Connect CLI (for app IDs)
-- Vercel serverless (optional)
-
-## Next Steps
-
-1. Deploy to Vercel/Netlify
-2. Point custom domain (optional)
-3. Update when new apps go live (`node fetch-app-data.js`)
-4. Use in freelance outreach
+**Any static host:**
+- Run `npm run build`
+- Upload `out/` folder
 
 ---
 
-Built by Murderbot for Rui Sousa  
+Built with Next.js by Murderbot for Rui Sousa  
 Last updated: 2026-03-05
