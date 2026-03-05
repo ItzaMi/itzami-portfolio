@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import appsData from '../apps-data.json';
+import { ResponsiveModal } from '@/components/ui/responsive-modal';
 
 interface App {
   id: string;
@@ -21,55 +22,61 @@ interface App {
   status?: string;
 }
 
-function AppModal({ app, onClose }: { app: App; onClose: () => void }) {
+function AppModalContent({ app }: { app: App }) {
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>×</button>
-        
-        <div className="modal-header">
-          {app.icon && <img src={app.icon} alt={app.name} className="modal-icon" />}
-          <div>
-            <h3>{app.name}</h3>
-            {app.genre && (
-              <div className="modal-meta">
-                {app.genre} • {app.price && app.price > 0 ? `$${app.price}` : 'Free'}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="modal-body">
-          <p className="modal-description">{app.description || app.shortDescription}</p>
-          
-          {app.screenshots && app.screenshots.length > 0 && (
-            <div className="modal-screenshots">
-              <h4>Screenshots</h4>
-              <div className="screenshots-grid">
-                {app.screenshots.map((screenshot, i) => (
-                  <img 
-                    key={i} 
-                    src={screenshot} 
-                    alt={`${app.name} screenshot ${i + 1}`}
-                    className="screenshot-img"
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {app.appStoreUrl && (
-            <a 
-              href={app.appStoreUrl} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="modal-app-store-btn"
-            >
-              View on App Store →
-            </a>
+    <div className="space-y-6">
+      <div className="flex items-start gap-5">
+        {app.icon && (
+          <img 
+            src={app.icon} 
+            alt={app.name} 
+            className="w-24 h-24 md:w-28 md:h-28 rounded-[22px] flex-shrink-0"
+          />
+        )}
+        <div className="flex-1 min-w-0">
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{app.name}</h3>
+          {app.genre && (
+            <p className="text-base text-gray-600">
+              {app.genre} • {app.price && app.price > 0 ? `$${app.price}` : 'Free'}
+            </p>
           )}
         </div>
       </div>
+
+      {app.description && (
+        <div className="prose prose-sm md:prose-base max-w-none">
+          <p className="text-gray-700 leading-relaxed whitespace-pre-line">
+            {app.description}
+          </p>
+        </div>
+      )}
+
+      {app.screenshots && app.screenshots.length > 0 && (
+        <div>
+          <h4 className="text-xl font-semibold mb-4">Screenshots</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {app.screenshots.map((screenshot, i) => (
+              <img 
+                key={i} 
+                src={screenshot} 
+                alt={`${app.name} screenshot ${i + 1}`}
+                className="w-full rounded-xl border border-gray-200 hover:scale-[1.02] transition-transform cursor-pointer"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {app.appStoreUrl && (
+        <a 
+          href={app.appStoreUrl} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="inline-block w-full md:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold text-center transition-colors"
+        >
+          View on App Store →
+        </a>
+      )}
     </div>
   );
 }
@@ -82,7 +89,6 @@ function AppCard({ app, onExplore }: { app: App; onExplore: () => void }) {
     <div className={`app-card ${!isLive ? 'not-live' : ''}`}>
       {!isLive && <span className="app-badge coming-soon">Coming Soon</span>}
       
-      {/* Only show icon if app is live and has an icon */}
       {isLive && app.icon && (
         <img 
           src={app.icon} 
@@ -206,9 +212,12 @@ export default function Home() {
         <p>© 2026 Rui Sousa • Built with Next.js</p>
       </footer>
 
-      {selectedApp && (
-        <AppModal app={selectedApp} onClose={() => setSelectedApp(null)} />
-      )}
+      <ResponsiveModal 
+        open={!!selectedApp} 
+        onOpenChange={(open) => !open && setSelectedApp(null)}
+      >
+        {selectedApp && <AppModalContent app={selectedApp} />}
+      </ResponsiveModal>
     </>
   );
 }
