@@ -36,7 +36,7 @@ export function ResponsiveModal({ open, onOpenChange, children }: ResponsiveModa
       <Drawer.Root open={open} onOpenChange={onOpenChange}>
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-black/80 z-50" />
-          <Drawer.Content className="fixed bottom-0 left-0 right-0 max-h-[80vh] bg-white rounded-t-[24px] z-50 flex flex-col">
+          <Drawer.Content className="fixed bottom-0 left-0 right-0 max-h-[80dvh] bg-white rounded-t-[24px] z-50 flex flex-col">
             <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 mt-4 mb-6" />
             <div className="overflow-y-auto flex-1 px-6 pb-6">
               {children}
