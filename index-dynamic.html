@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rui Sousa - iOS & React Native Developer</title>
+    <meta name="description" content="iOS and React Native developer. 17 apps shipped. Available for consulting and freelance work.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #111;
+            background: #fafafa;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        header {
+            margin-bottom: 80px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #666;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .intro {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        .cta {
+            margin-top: 32px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: #111;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: #333;
+        }
+
+        .btn-secondary {
+            background: #fff;
+            color: #111;
+            border: 2px solid #e5e5e5;
+        }
+
+        .btn-secondary:hover {
+            border-color: #111;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            letter-spacing: -0.01em;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .app-card {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .app-card:hover {
+            border-color: #ccc;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .app-card.not-live {
+            opacity: 0.6;
+        }
+
+        .app-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .app-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: #ffd700;
+            color: #333;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .app-badge.coming-soon {
+            background: #e5e5e5;
+        }
+
+        .app-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #111;
+        }
+
+        .app-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .app-meta {
+            font-size: 13px;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        .app-link {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: #007AFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .app-link:hover {
+            background: #0051D5;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .skill-tag {
+            padding: 8px 16px;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #111;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .contact {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .contact h2 {
+            margin-bottom: 16px;
+        }
+
+        .contact p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 32px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+
+            .subtitle {
+                font-size: 20px;
+            }
+
+            .intro {
+                font-size: 16px;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Rui Sousa</h1>
+            <p class="subtitle">iOS & React Native Developer</p>
+            <p class="intro">
+                I build and ship mobile apps fast. <span id="app-count">17</span> apps live on the App Store, from baby trackers to AI-powered identifier tools. 
+                Available for consulting, freelance projects, and building your next app.
+            </p>
+            <div class="cta">
+                <a href="mailto:rui@itzami.com" class="btn">Hire Me</a>
+                <a href="https://twitter.com/rui_ro_sousa" target="_blank" class="btn-secondary btn">Twitter</a>
+                <a href="https://github.com/ItzaMi" target="_blank" class="btn-secondary btn">GitHub</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>By The Numbers</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-number" id="stat-apps">17</span>
+                    <span class="stat-label">Apps Shipped</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="stat-live">11</span>
+                    <span class="stat-label">Live on App Store</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">3+</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Apps</h2>
+            <div id="apps-container" class="apps-grid">
+                <div class="loading">Loading apps...</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Skills & Tech Stack</h2>
+            <div class="skills">
+                <span class="skill-tag">React Native</span>
+                <span class="skill-tag">Expo</span>
+                <span class="skill-tag">TypeScript</span>
+                <span class="skill-tag">iOS Development</span>
+                <span class="skill-tag">App Store Connect</span>
+                <span class="skill-tag">RevenueCat (IAP)</span>
+                <span class="skill-tag">Firebase</span>
+                <span class="skill-tag">REST APIs</span>
+                <span class="skill-tag">AI/ML Integration</span>
+                <span class="skill-tag">Vision AI</span>
+                <span class="skill-tag">Git & CI/CD</span>
+                <span class="skill-tag">Vercel & Serverless</span>
+            </div>
+        </section>
+
+        <section class="contact">
+            <h2>Let's Work Together</h2>
+            <p>Available for consulting, freelance projects, and building your next mobile app.</p>
+            <div class="social-links">
+                <a href="mailto:rui@itzami.com" class="btn">Email Me</a>
+                <a href="https://twitter.com/rui_ro_sousa" target="_blank" class="btn-secondary btn">Twitter</a>
+                <a href="https://github.com/ItzaMi" target="_blank" class="btn-secondary btn">GitHub</a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2026 Rui Sousa • Built with zero frameworks</p>
+    </footer>
+
+    <script>
+        // Load and render apps from JSON
+        fetch('./apps-data.json')
+            .then(res => res.json())
+            .then(apps => {
+                const container = document.getElementById('apps-container');
+                const liveApps = apps.filter(a => a.appStoreUrl);
+                
+                // Update stats
+                document.getElementById('stat-apps').textContent = apps.length;
+                document.getElementById('stat-live').textContent = liveApps.length;
+                document.getElementById('app-count').textContent = apps.length;
+                
+                // Render apps (live first, then coming soon)
+                const sortedApps = [
+                    ...liveApps,
+                    ...apps.filter(a => !a.appStoreUrl)
+                ];
+                
+                container.innerHTML = sortedApps.map(app => {
+                    const isLive = !!app.appStoreUrl;
+                    const iconUrl = app.icon || `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%23667eea"/></svg>`;
+                    
+                    return `
+                        <div class="app-card ${!isLive ? 'not-live' : ''}">
+                            ${!isLive ? '<span class="app-badge coming-soon">Coming Soon</span>' : ''}
+                            <img src="${iconUrl}" alt="${app.name} icon" class="app-icon" />
+                            <div class="app-name">${app.name}</div>
+                            <div class="app-desc">${isLive ? (app.shortDescription || 'Available on the App Store') : 'Coming soon'}</div>
+                            ${app.genre ? `<div class="app-meta">📱 ${app.genre}${app.price > 0 ? ` • $${app.price}` : ' • Free'}</div>` : ''}
+                            ${isLive ? `<a href="${app.appStoreUrl}" target="_blank" class="app-link">View on App Store →</a>` : ''}
+                        </div>
+                    `;
+                }).join('');
+            })
+            .catch(err => {
+                console.error('Failed to load apps:', err);
+                document.getElementById('apps-container').innerHTML = '<div class="loading">Failed to load apps</div>';
+            });
+    </script>
+</body>
+</html>
