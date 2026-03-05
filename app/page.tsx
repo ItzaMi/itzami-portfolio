@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import appsData from '../apps-data.json';
 
 interface App {
@@ -18,8 +21,62 @@ interface App {
   status?: string;
 }
 
-function AppCard({ app }: { app: App }) {
+function AppModal({ app, onClose }: { app: App; onClose: () => void }) {
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>×</button>
+        
+        <div className="modal-header">
+          {app.icon && <img src={app.icon} alt={app.name} className="modal-icon" />}
+          <div>
+            <h3>{app.name}</h3>
+            {app.genre && (
+              <div className="modal-meta">
+                {app.genre} • {app.price && app.price > 0 ? `$${app.price}` : 'Free'}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="modal-body">
+          <p className="modal-description">{app.description || app.shortDescription}</p>
+          
+          {app.screenshots && app.screenshots.length > 0 && (
+            <div className="modal-screenshots">
+              <h4>Screenshots</h4>
+              <div className="screenshots-grid">
+                {app.screenshots.map((screenshot, i) => (
+                  <img 
+                    key={i} 
+                    src={screenshot} 
+                    alt={`${app.name} screenshot ${i + 1}`}
+                    className="screenshot-img"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {app.appStoreUrl && (
+            <a 
+              href={app.appStoreUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="modal-app-store-btn"
+            >
+              View on App Store →
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AppCard({ app, onExplore }: { app: App; onExplore: () => void }) {
   const isLive = !!app.appStoreUrl;
+  const hasScreenshots = app.screenshots && app.screenshots.length > 0;
   
   return (
     <div className={`app-card ${!isLive ? 'not-live' : ''}`}>
@@ -36,7 +93,7 @@ function AppCard({ app }: { app: App }) {
       
       <div className="app-name">{app.name}</div>
       <div className="app-desc">
-        {isLive ? (app.shortDescription || 'Available now') : 'Coming soon to the App Store'}
+        {isLive ? (app.shortDescription || 'Available now on the App Store') : 'Coming soon to the App Store'}
       </div>
       
       {app.genre && (
@@ -45,16 +102,24 @@ function AppCard({ app }: { app: App }) {
         </div>
       )}
       
-      {isLive && (
-        <a href={app.appStoreUrl!} target="_blank" rel="noopener noreferrer" className="app-link">
-          View on App Store →
-        </a>
-      )}
+      <div className="app-actions">
+        {isLive && (hasScreenshots || app.description) && (
+          <button onClick={onExplore} className="btn-explore">
+            Explore
+          </button>
+        )}
+        {isLive && (
+          <a href={app.appStoreUrl!} target="_blank" rel="noopener noreferrer" className="app-link">
+            App Store →
+          </a>
+        )}
+      </div>
     </div>
   );
 }
 
 export default function Home() {
+  const [selectedApp, setSelectedApp] = useState<App | null>(null);
   const apps = appsData as App[];
   const liveApps = apps.filter(a => a.appStoreUrl);
   const comingSoon = apps.filter(a => !a.appStoreUrl);
@@ -99,7 +164,11 @@ export default function Home() {
           <h2>Apps</h2>
           <div className="apps-grid">
             {sortedApps.map(app => (
-              <AppCard key={app.id} app={app} />
+              <AppCard 
+                key={app.id} 
+                app={app} 
+                onExplore={() => setSelectedApp(app)}
+              />
             ))}
           </div>
         </section>
@@ -136,6 +205,10 @@ export default function Home() {
       <footer>
         <p>© 2026 Rui Sousa • Built with Next.js</p>
       </footer>
+
+      {selectedApp && (
+        <AppModal app={selectedApp} onClose={() => setSelectedApp(null)} />
+      )}
     </>
   );
 }
